@@ -1,0 +1,499 @@
+<html>
+    <body>
+        {# Personal details #}
+        <table class="full-width">
+            <tbody>
+                <tr>
+                    <td rowspan="{{ 3 if personal_details.github_username else 2 }}">
+                        <h1>
+                            {{ personal_details.name }}
+                        </h1>
+                        <em>{{ personal_details.title }}</em>
+                    </td>
+                    <td class="right">
+                        {{ personal_details.email }}
+                    </td>
+                </tr>
+                <tr class="right">
+                    <td>
+                        {{ personal_details.phone }}
+                    </td>
+                </tr>
+                {% if personal_details.github_username %}
+                    <tr class="right">
+                        <td>
+                            https://github.com/{{ personal_details.github_username }}
+                        </td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+
+        <hr />
+        {# Profile #}
+        <p class="justify">{{ profile }}</p>
+
+        {# Professional Experience #}
+        <h2>Professional experience</h2>
+        <hr />
+        <table class="full-width">
+            <tbody>
+            {% for employment in employments %}
+                {# Spacer row #}
+                <tr>
+                    <td class="top-gap"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                {# Employer name row #}
+                <tr>
+                    <td class="left-column" colspan="2">
+                        {% if employment.organisation.logo_uri %}
+                        <img class="icon" src="{{ employment.organisation.logo_uri }}" />
+                        {% endif %}
+                    </td>
+                    <td colspan="2">
+                        <h4>
+                            {{employment.organisation.name}}
+                        </h4>
+                        {% if employment.role %}
+                            <div class="role">{{ employment.role }}</div>
+                        {% endif %}
+                    </td>
+                    <td class="right date-range-column">
+                        {{ date_range(employment.start_date, employment.end_date) }}
+                        {% if employment.organisation.industry %}
+                            <div class="role">{{ employment.organisation.industry }}</div>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="top-gap"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td
+                        {% if employment.roles %}
+                            class="right-line"
+                        {% endif %}
+                    >
+                    </td>
+                    <td></td>
+                    <td colspan="3">
+                        {% if employment.summary %}
+                            <p class="justify">{{employment.summary}}</p>
+                        {% endif %}
+                        {% if employment.details %}
+                            <ul>
+                            {% for detail in employment.details %}
+                                <li>{{ detail }}</li>
+                            {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% if employment.roles %}
+                    {% for role in employment.roles %}
+                        {# <tr>
+                            <td></td>
+                            <td colspan="3">
+                                <h3>{{ role.name }}</h3>
+                            </td>
+                        </tr> #}
+                        {% if role.summary %}
+                        <tr>
+                            <td class="top-gap"></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td colspan="3">
+                                {# Summary #}
+                                <p class="justify">{{ role.summary }}</p>
+                                {# Details #}
+                                {% if role.details %}
+                                    <ul>
+                                    {% for detail in role.details %}
+                                        <li>{{ detail }}</li>
+                                    {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endif %}
+                        {% if employment_layout == 'project' and role.projects %}
+                            {% for project in role.projects %}
+                                <tr>
+                                    <td></td>
+                                    <td colspan="3">
+                                        <h5>{{ project.name }}</h5>
+                                        {% if project.summary %}
+                                            <p class="justify">{{ project.summary }}</p>
+                                        {% endif %}
+                                        {% if project.par %}
+                                        <ul>
+                                            <li>{{ project.par.problem }}</li>
+                                            <li>{{ project.par.action }}</li>
+                                            <li>{{ project.par.result }}</li>
+                                        </ul>
+                                        {% endif %}
+                                        {% if project.star %}
+                                        <ul>
+                                            <li>{{ project.star.situation }}</li>
+                                            <li>{{ project.star.task }}</li>
+                                            <li>{{ project.star.action }}</li>
+                                            <li>{{ project.star.result }}</li>
+                                        </ul>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% endif %}
+                        {% if role.end_clients %}
+                            {% for end_client in role.end_clients %}
+                            {# Spacer row #}
+                            <tr>
+                                <td class="top-gap right-line"></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            {# end client icon, role, dates #}
+                            <tr>
+                                <td class="one-third-icon-spacer"></td>
+                                <td></td>
+                                <td class="left-column" rowspan="3">
+                                    <img class="icon" src="{{ end_client.organisation.logo_uri }}" />
+                                </td>
+                                <td rowspan="3">
+                                    <h4>End Client: {{ end_client.organisation.name }}</h4>
+                                    {% if end_client.role %}
+                                        <div class="role">{{ end_client.role }}</div>
+                                    {% endif %}
+                                </td>
+                                <td class="right date-range-column" rowspan="3">
+                                    {{ date_range(end_client.start_date, end_client.end_date) }}
+                                    {% if end_client.organisation.industry %}
+                                        <div class="role">{{ end_client.organisation.industry }}</div>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {# Left icon spacers #}
+                            <tr>
+                                <td class="one-third-icon-spacer" colspan="2">
+                                    <span class="dot"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="one-third-icon-spacer"></td>
+                                <td></td>
+                            </tr>
+                            {# Spacer row #}
+                            <tr>
+                            {% if not loop.last %}
+                                <td class="top-gap right-line"></td>
+                            {% else %}
+                                <td class="top-gap"></td>
+                            {% endif %}
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                            {% if not loop.last %}
+                                <td class="right-line"></td>
+                            {% else %}
+                                <td></td>
+                            {% endif %}
+                                <td></td>
+                                <td></td>
+                                <td colspan="2">
+                                    {# Summary #}
+                                    {% if end_client.summary %}
+                                    <p class="justify">{{ end_client.summary }}</p>
+                                    {% endif %}
+
+                                    {# Details #}
+                                    {% if end_client.details %}
+                                        <ul>
+                                        {% for detail in end_client.details %}
+                                            <li>{{ detail }}</li>
+                                        {% endfor %}
+                                        </ul>
+                                    {% endif %}
+
+                                    {# Projects #}
+                                    {% if end_client_layout == 'project' and end_client.projects %}
+                                        {% for project in end_client.projects %}
+                                            <h5>{{ project.name }}</h5>
+                                            {% if project.summary %}
+                                                <p>{{ project.summary }}</p>
+                                            {% endif %}
+                                            {% if project.par %}
+                                            <ul>
+                                                <li>{{ project.par.problem }}</li>
+                                                <li>{{ project.par.action }}</li>
+                                                <li>{{ project.par.result }}</li>
+                                            </ul>
+                                            {% endif %}
+                                            {% if project.star %}
+                                            <ul>
+                                                <li>{{ project.star.situation }}</li>
+                                                <li>{{ project.star.task }}</li>
+                                                <li>{{ project.star.action }}</li>
+                                                <li>{{ project.star.result }}</li>
+                                            </ul>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
+
+        {% if independent_projects %}
+        <h2>Independent Projects</h2>
+        <hr />
+        <table class="full-width">
+            <tbody>
+            {% for independent_project in independent_projects %}
+                <tr>
+                    <td class="top-gap"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="left-column">
+                        {% if independent_project.organisation.logo_uri %}
+                        <img class="icon" src="{{ independent_project.organisation.logo_uri }}" />
+                        {% endif %}
+                    </td>
+                    <td colspan="2">
+                        <h4>
+                            {{independent_project.organisation.name}}
+                        </h4>
+                        {% if independent_project.role %}
+                            <div class="role">{{ independent_project.role }}</div>
+                        {% endif %}
+                    </td>
+                    <td class="right date-range-column">
+                        {{ date_range(independent_project.start_date, independent_project.end_date) }}
+                        {% if independent_project.organisation.industry %}
+                            <div class="role">{{ independent_project.organisation.industry }}</div>
+                        {% endif %}
+                    </td>
+                </tr>
+                {# Spacer row #}
+                <tr>
+                    <td class="top-gap"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        {% if independent_project.summary %}
+                            <p class="justify">{{independent_project.summary}}</p>
+                        {% endif %}
+                        {% if independent_project.details %}
+                            <ul>
+                            {% for detail in independent_project.details %}
+                                <li>{{ detail }}</li>
+                            {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+
+
+        {# Qualifications #}
+        {% if awarding_bodies %}
+            <h2>Qualifications</h2>
+            <hr />
+            <div class="row">
+                {# Column 1 qualifications #}
+                <div class="column right-gap">
+                    <table class="full-width">
+                        <tbody>
+                        {% for awarding_body in awarding_bodies if awarding_body.column == 1 %}
+                            {# Spacer row #}
+                            <tr>
+                                <td class="top-gap"></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="qualification-icon-column">
+                                    {% if awarding_body.logo_uri %}
+                                    <img class="icon" src="{{ awarding_body.logo_uri }}" />
+                                    {% endif %}
+                                </td>
+                                <td colspan="2">
+                                    <h4>
+                                        {{ awarding_body.name }}
+                                    </h4>
+                                </td>
+                            </tr>
+                            {% for qualification in awarding_body.qualifications %}
+                            {# Spacer row #}
+                            <tr>
+                                <td class="top-gap right-line"></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="one-third-icon-spacer right-line"></td>
+                                <td></td>
+                                <td rowspan="3" class="qualification">
+                                    <em>
+                                        {{ qualification.name }}
+                                    </em>
+                                    {% if qualification.reference %}
+                                    <div class="mono">
+                                        {% if qualification.verification_url %}
+                                            <a href="{{ qualification.verification_url }}">
+                                                {{ qualification.reference }}
+                                            </a>
+                                        {% elif awarding_body.verification_url_prefix %}
+                                            <a href="{{ awarding_body.verification_url_prefix }}{{ qualification.reference }}">
+                                                {{ qualification.reference }}
+                                            </a>
+                                        {% else %}
+                                            {{ qualification.reference }}
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                                </td>
+                                <td rowspan="3" class="right qualification-date-column">
+                                    <em>
+                                        {{ qualification.date_awarded.strftime('%b %Y') }}
+                                    </em>
+                                </td>
+                            </tr>
+                            {# Left icon spacers #}
+                            <tr>
+                                <td colspan="2" class="one-third-icon-spacer">
+                                    <span class="dot"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                            {% if not loop.last %}
+                                <td class="one-third-icon-spacer right-line"></td>
+                            {% else %}
+                                <td class="one-third-icon-spacer"></td>
+                            {% endif %}
+                                <td></td>
+                            </tr>
+                            {% endfor %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {# Column 1 qualifications #}
+                {# TODO: Avoid duplication #}
+                <div class="column left-gap">
+                    <table class="full-width">
+                        <tbody>
+                        {% for awarding_body in awarding_bodies if awarding_body.column == 2 %}
+                            {# Spacer row #}
+                            <tr>
+                                <td class="top-gap"></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="qualification-icon-column">
+                                    {% if awarding_body.logo_uri %}
+                                    <img class="icon" src="{{ awarding_body.logo_uri }}" />
+                                    {% endif %}
+                                </td>
+                                <td colspan="2">
+                                    <h4>
+                                        {{ awarding_body.name }}
+                                    </h4>
+                                </td>
+                            </tr>
+                            {% for qualification in awarding_body.qualifications %}
+                            {# Spacer row #}
+                            <tr>
+                                <td class="top-gap right-line"></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="one-third-icon-spacer right-line"></td>
+                                <td></td>
+                                <td rowspan="3" class="qualification">
+                                    <em>
+                                        {{ qualification.name }}
+                                    </em>
+                                    {% if qualification.reference %}
+                                    <div class="mono">
+                                        {% if qualification.verification_url %}
+                                            <a href="{{ qualification.verification_url }}">
+                                                {{ qualification.reference }}
+                                            </a>
+                                        {% elif awarding_body.verification_url_prefix %}
+                                            <a href="{{ awarding_body.verification_url_prefix }}{{ qualification.reference }}">
+                                                {{ qualification.reference }}
+                                            </a>
+                                        {% else %}
+                                            {{ qualification.reference }}
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                                </td>
+                                <td rowspan="3" class="right qualification-date-column">
+                                    <em>
+                                        {{ qualification.date_awarded.strftime('%b %Y') }}
+                                    </em>
+                                </td>
+                            </tr>
+                            {# Left icon spacers #}
+                            <tr>
+                                <td colspan="2" class="one-third-icon-spacer">
+                                    <span class="dot"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                            {% if not loop.last %}
+                                <td class="one-third-icon-spacer right-line"></td>
+                            {% else %}
+                                <td class="one-third-icon-spacer"></td>
+                            {% endif %}
+                                <td></td>
+                            </tr>
+                            {% endfor %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        {% endif %}
+    </body>
+</html>

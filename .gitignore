@@ -1,0 +1,13 @@
+output/*
+!output/.gitkeep
+input/css/*
+!input/css/default.css.jinja
+!input/css/fonts.css.jinja
+!input/css/grid.css.jinja
+input/cv_definitions/*
+!input/cv_definitions/example.yaml
+input/img/*
+!input/img/.gitkeep
+
+# Python
+__pycache__

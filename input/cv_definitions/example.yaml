@@ -1,0 +1,37 @@
+personal_details:
+  name: First Last
+  email: first.last@example.com
+  phone: +44 (0)1234 567 890
+  github_username: first-last
+  title: Specialist something
+profile: My profile
+employments:
+  - start_date: 2019-03-06
+    organisation:
+      name: Company Limited
+      logo_uri: img/company.png
+      summary: |
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+         labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.
+    roles:
+      - name: Team lead
+        end_clients:
+          - organisation:
+              name: End Client Limited
+              logo_uri: img/end-client-icon.svg
+            start_date: 2020-04-01
+            summary: |
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+            projects:
+              - name: Migrate email provider
+                star:
+                  situation: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                  task: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                  action: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                  result: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+
+awarding_bodies:
+  - name: University of Somewhere
+    qualifications:
+      - name: Bachelors in something
+        date_awarded: 2024-01-01
