@@ -327,6 +327,15 @@
         {% endif %}
 
 
+        <h2 style="page-break-before: always;">Skills</h2>
+         <hr />
+        {% set skill_lines = (skills or '').splitlines() %}
+        <ul>
+        {% for line in skill_lines %}
+            <li>{{ line }}</li>
+        {% endfor %}
+        </ul>
+
         {# Qualifications #}
         {% if awarding_bodies %}
             <h2>Qualifications</h2>

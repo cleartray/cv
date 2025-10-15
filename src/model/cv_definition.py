@@ -32,3 +32,4 @@ class CvDefinition:
     employment_layout: str = ExperienceLayout.PROJECT
     independent_projects: list[IndependentProject] | None = None
     awarding_bodies: list[AwardingBody] | None = None
+    skills: str | None = None
