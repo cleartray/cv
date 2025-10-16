@@ -29,7 +29,7 @@ employments:
                   task: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
                   action: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
                   result: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-skills: |
+skills:
   - Frontend: JavaScript, TypeScript, React, Redux Toolkit, Vite, HTML, CSS, Tailwind, Material UI
   - Backend: Node.js, Express, AWS, Docker
   - DevOps / Cloud: Terraform, GitHub Actions, Docker, AWS

@@ -328,11 +328,12 @@
 
 
         <h2 style="page-break-before: always;">Skills</h2>
-         <hr />
-        {% set skill_lines = (skills or '').splitlines() %}
+        <hr />
         <ul>
-        {% for line in skill_lines %}
-            <li>{{ line }}</li>
+        {% for category in skills %}
+            {% for name, items in category.items() %}
+                <li><strong>{{ name }}:</strong> {{ items }}</li>
+            {% endfor %}
         {% endfor %}
         </ul>
 
