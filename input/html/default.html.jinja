@@ -327,6 +327,16 @@
         {% endif %}
 
 
+        {% if skills %}
+        <h2 style="page-break-before: always;">Skills</h2>
+        <hr />
+        <ul>
+            {% for name, items in skills.items() %}
+            <li><strong>{{ name }}:</strong> {{ items }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
         {# Qualifications #}
         {% if awarding_bodies %}
             <h2>Qualifications</h2>
